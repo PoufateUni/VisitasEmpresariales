@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Registro Visita</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../Css/estilo.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+
+        <header class="encabezado">
+            <strong>AVECS</strong>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <h1 class="FormularioEstudianteTitulo"> Formulario registro visitas empresariales </h1>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+        
+        <table class="FormularioEstudianteForm"> 
+            <tr>
+                <th> Asignatura </th>
+                <td> <select type="text" name="seleccion" class="AlineadoHyV">
+                        <option> Seleccionar Asignatura </option>
+                        <option> API </option>
+                        <option> PETI </option>
+                        <option> AyD </option>
+                    </select> 
+                </td>
+            </tr>
+
+            <tr>
+                <th>Docente</th>
+                <td> <select type="text" name="seleccion" class="AlineadoHyV">
+                        <option> Seleccionar Docente </option>
+                        <option> Maria del Pilar </option>
+                        <option> Claudia </option>
+                        <option> Pilar </option>
+                    </select> 
+                </td>
+            </tr>
+
+            <tr>
+                <th>Número de estudiantes</th>
+                <td> <input type="number" name="numEstudiantes" class="AlineadoHyV"> </td>
+            </tr>
+            
+            <tr>
+                <th>Lugar de la Visita</th>
+                <td> <input type="text" name="lugar" class="AlineadoHyV">  </td>
+
+            </tr>
+            
+            <tr>
+                <th>Departamento</th>
+                <td> <select type="text" name="seleccion" class="AlineadoHyV">
+                        <option> Seleccionar departamento </option> </select> </td>
+            </tr>
+
+            <tr>
+                <th> Ciudad </th>
+                <td> <select type="text" name="seleccion" class="AlineadoHyV">
+                        <option> Seleccionar ciudad </option> </select> </td>
+            </tr>
+            
+            <tr>
+                <th> Fecha de Inicio</th>
+                <td> <input type="date" name="fecha" class="AlineadoHyV"></td>
+            </tr>
+
+            <tr>
+                <th>Estudiantes con ARL</th>
+                <td> <input type="number" name="numEstudiantesARL" class="AlineadoHyV"> </td>
+            </tr>
+        </table>
+
+
+        <div class="Boton">
+            <button class="TextBoton"> Registrar </button>
+        </div>
+
+
+    </body>
+</html>

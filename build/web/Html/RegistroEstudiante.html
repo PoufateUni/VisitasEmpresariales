@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Registro Estudiante</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../Css/estilo.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+
+    <body >
+
+        <header class="encabezado">
+            <strong>AVECS</strong>
+        </header>
+
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <h1 class="FormularioEstudianteTitulo"> Formulario registro estudiante </h1>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+
+        <table class="FormularioEstudianteForm"> 
+            <tr>
+                <th>Numero de documento</th>
+                <td ><input  type="text" class="AlineadoHyV"></td>
+            </tr>
+
+            <tr>
+                <th>Tipo de documento</th>
+                <td >
+                    <select  type="text" class="AlineadoHyV">
+                        <option>Seleccione tipo documento</option>
+                        <option>Tarjeta de Identidad</option>
+                        <option>Cedula de ciudadania</option>
+                    </select>
+                </td>
+            </tr>
+            
+            <tr>
+                <th>Nombres y apellidos</th>
+                <td><input type="text" class="AlineadoHyV"></td>
+            </tr>
+            
+            <tr>
+                <th>Semestre académico</th>
+                <td><input type="number" class="AlineadoHyV"></td>
+
+            </tr>
+            
+            <tr>
+                <th>Correo</th>
+                <td><input type="email" class="AlineadoHyV"></td>
+            </tr>
+            
+            <tr>
+                <th>Teléfono</th>
+                <td><input type="number" class="AlineadoHyV"></td>
+            </tr>
+            
+            <tr>
+                <th>Seguro médico</th>
+                <td><input type="text" class="AlineadoHyV"></td>
+            </tr>
+
+        </table>
+        
+        <div class="Boton">
+            <button class="TextBoton"> Registrar </button>
+        </div>
+
+    </body>
+</html>
