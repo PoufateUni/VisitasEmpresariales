@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 22-04-2020 a las 05:36:33
--- Versión del servidor: 10.4.8-MariaDB
--- Versión de PHP: 7.3.10
+-- Servidor: localhost
+-- Tiempo de generación: 08-05-2020 a las 00:34:11
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,8 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `avecs_bd_iteración1`
 --
-CREATE DATABASE avecs_bd_iteración1;
-USE avecs_bd_iteración1;
+
 -- --------------------------------------------------------
 
 --
@@ -44,10 +42,9 @@ CREATE TABLE `asistencia` (
 
 CREATE TABLE `director_administrador` (
   `id_persona` int(11) NOT NULL,
-  `semestre_entrada` int(11) NOT NULL,
+  `fecha_entrada` date NOT NULL,
   `user_id` int(11) NOT NULL,
-  `semestre_salida` int(11) NOT NULL,
-  `id_director` int(11) NOT NULL
+  `fecha_salida` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -61,7 +58,8 @@ CREATE TABLE `documento_apoyo` (
   `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `direccion_url` mediumtext COLLATE utf8_spanish_ci NOT NULL,
   `visita_id` int(11) NOT NULL,
-  `fecha_creacion` datetime NOT NULL DEFAULT current_timestamp()
+  `fecha_creacion` datetime NOT NULL DEFAULT current_timestamp(),
+  `tipo_doc_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -167,6 +165,18 @@ CREATE TABLE `semestre` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tipo_doc_apoyo`
+--
+
+CREATE TABLE `tipo_doc_apoyo` (
+  `id_tipo_doc` int(11) NOT NULL,
+  `nombre` tinytext NOT NULL,
+  `descripcion` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `tipo_identificacion`
 --
 
@@ -219,10 +229,9 @@ ALTER TABLE `asistencia`
 -- Indices de la tabla `director_administrador`
 --
 ALTER TABLE `director_administrador`
-  ADD PRIMARY KEY (`id_director`),
-  ADD KEY `semestre_entrada` (`semestre_entrada`),
+  ADD PRIMARY KEY (`id_persona`),
+  ADD UNIQUE KEY `user_id_2` (`user_id`),
   ADD KEY `user_id` (`user_id`),
-  ADD KEY `semestre_salida` (`semestre_salida`),
   ADD KEY `id_persona` (`id_persona`);
 
 --
@@ -230,7 +239,8 @@ ALTER TABLE `director_administrador`
 --
 ALTER TABLE `documento_apoyo`
   ADD PRIMARY KEY (`id_doc`,`visita_id`),
-  ADD KEY `visita_id` (`visita_id`);
+  ADD KEY `visita_id` (`visita_id`),
+  ADD KEY `tipo_doc_id` (`tipo_doc_id`);
 
 --
 -- Indices de la tabla `empresa`
@@ -244,6 +254,8 @@ ALTER TABLE `empresa`
 --
 ALTER TABLE `estudiante`
   ADD PRIMARY KEY (`persona_id`),
+  ADD UNIQUE KEY `user_id` (`user_id`),
+  ADD UNIQUE KEY `user_id_2` (`user_id`),
   ADD KEY `estudiante_user_fk` (`user_id`);
 
 --
@@ -282,6 +294,7 @@ ALTER TABLE `profesor`
   ADD PRIMARY KEY (`id_persona`),
   ADD UNIQUE KEY `codigo` (`codigo`),
   ADD UNIQUE KEY `codigo_2` (`codigo`),
+  ADD UNIQUE KEY `user_2` (`user`),
   ADD KEY `user` (`user`);
 
 --
@@ -289,6 +302,12 @@ ALTER TABLE `profesor`
 --
 ALTER TABLE `semestre`
   ADD PRIMARY KEY (`id_semestre`);
+
+--
+-- Indices de la tabla `tipo_doc_apoyo`
+--
+ALTER TABLE `tipo_doc_apoyo`
+  ADD PRIMARY KEY (`id_tipo_doc`);
 
 --
 -- Indices de la tabla `tipo_identificacion`
@@ -316,12 +335,6 @@ ALTER TABLE `visita`
 --
 
 --
--- AUTO_INCREMENT de la tabla `director_administrador`
---
-ALTER TABLE `director_administrador`
-  MODIFY `id_director` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `documento_apoyo`
 --
 ALTER TABLE `documento_apoyo`
@@ -338,6 +351,12 @@ ALTER TABLE `genero`
 --
 ALTER TABLE `semestre`
   MODIFY `id_semestre` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tipo_doc_apoyo`
+--
+ALTER TABLE `tipo_doc_apoyo`
+  MODIFY `id_tipo_doc` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `tipo_identificacion`
@@ -367,15 +386,14 @@ ALTER TABLE `asistencia`
 --
 ALTER TABLE `director_administrador`
   ADD CONSTRAINT `admin_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `profesor_admin_fk` FOREIGN KEY (`id_persona`) REFERENCES `profesor` (`id_persona`),
-  ADD CONSTRAINT `semestre_in_admin_fk` FOREIGN KEY (`semestre_entrada`) REFERENCES `semestre` (`id_semestre`),
-  ADD CONSTRAINT `semestre_out_admin_fk` FOREIGN KEY (`semestre_salida`) REFERENCES `semestre` (`id_semestre`);
+  ADD CONSTRAINT `profesor_admin_fk` FOREIGN KEY (`id_persona`) REFERENCES `profesor` (`id_persona`);
 
 --
 -- Filtros para la tabla `documento_apoyo`
 --
 ALTER TABLE `documento_apoyo`
-  ADD CONSTRAINT `visita_id_fk` FOREIGN KEY (`visita_id`) REFERENCES `visita` (`id_visita`);
+  ADD CONSTRAINT `tipo_doc_fk` FOREIGN KEY (`tipo_doc_id`) REFERENCES `tipo_doc_apoyo` (`id_tipo_doc`),
+  ADD CONSTRAINT `visita_id_fk` FOREIGN KEY (`visita_id`) REFERENCES `visita` (`id_visita`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `empresa`
@@ -416,7 +434,7 @@ ALTER TABLE `profesor`
 -- Filtros para la tabla `visita`
 --
 ALTER TABLE `visita`
-  ADD CONSTRAINT `director_id_fk` FOREIGN KEY (`director_realizado`) REFERENCES `director_administrador` (`id_director`),
+  ADD CONSTRAINT `director_id_fk` FOREIGN KEY (`director_realizado`) REFERENCES `director_administrador` (`id_persona`),
   ADD CONSTRAINT `visita_empresa_fk` FOREIGN KEY (`empresa_nit`) REFERENCES `empresa` (`nit`);
 COMMIT;
 
