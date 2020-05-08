@@ -1,5 +1,5 @@
-package model;
-import entities.Genero;
+package daos;
+import model.Genero;
 import utilities.Conexion;
 public class GeneroDao extends Conexion<Genero> 
 implements GenericDao<Genero> {

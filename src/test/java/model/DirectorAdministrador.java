@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -33,17 +33,14 @@ public class DirectorAdministrador implements Serializable {
 	@JoinColumn(name="id_persona")
 	private Profesor profesor;
 
+	//bi-directional many-to-one association to Usuario
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private Usuario usuario;
+
 	//bi-directional many-to-one association to Visita
 	@OneToMany(mappedBy="directorAdministrador")
 	private List<Visita> visitas;
-
-	//bi-directional many-to-one association to Persona
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="id_persona", referencedColumnName="id_persona"),
-		@JoinColumn(name="id_tipo", referencedColumnName="tipo_id")
-		})
-	private Persona persona;
 
 	public DirectorAdministrador() {
 	}
@@ -80,6 +77,14 @@ public class DirectorAdministrador implements Serializable {
 		this.profesor = profesor;
 	}
 
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	public List<Visita> getVisitas() {
 		return this.visitas;
 	}
@@ -100,14 +105,6 @@ public class DirectorAdministrador implements Serializable {
 		visita.setDirectorAdministrador(null);
 
 		return visita;
-	}
-
-	public Persona getPersona() {
-		return this.persona;
-	}
-
-	public void setPersona(Persona persona) {
-		this.persona = persona;
 	}
 
 }

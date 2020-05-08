@@ -1,7 +1,7 @@
 package utilities;
 
-import entities.Genero;
-import model.GeneroDao;
+import daos.GeneroDao;
+import model.Genero;
 
 public class Prueba {
 
@@ -11,9 +11,10 @@ public class Prueba {
 
 	public static void main(String[] args) {
 		Genero G = new Genero();
-		GeneroDao gd= new GeneroDao();
-		G.setNombre("masculino");
-		gd.insert(G);
+		GeneroDao g= new GeneroDao();
+		G.setNombre("femenino");
+		g.insert(G);
+		System.out.print("done");
 
 	}
 

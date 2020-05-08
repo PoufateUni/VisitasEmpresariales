@@ -1,5 +1,5 @@
 
-	package model;
+	package daos;
 
 	import java.util.List;
 

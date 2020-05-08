@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -15,7 +15,7 @@ public class DocumentoApoyoPK implements Serializable {
 	@Column(name="id_doc")
 	private int idDoc;
 
-	@Column(name="visita_id", insertable=false, updatable=false)
+	@Column(name="visita_id")
 	private int visitaId;
 
 	public DocumentoApoyoPK() {

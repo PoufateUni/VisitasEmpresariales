@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -35,7 +35,7 @@ public class DocumentoApoyo implements Serializable {
 
 	//bi-directional many-to-one association to Visita
 	@ManyToOne
-	@JoinColumn(name="visita_id")
+	@JoinColumn(name="visita_id", insertable=false, updatable=false)
 	private Visita visita;
 
 	public DocumentoApoyo() {

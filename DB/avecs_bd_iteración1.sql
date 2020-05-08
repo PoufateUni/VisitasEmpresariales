@@ -26,6 +26,8 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `asistencia`
 --
+CREATE database avecs_bd_iteración1;
+use avecs_bd_iteración1;
 
 CREATE TABLE `asistencia` (
   `estudiante_id` int(11) NOT NULL,

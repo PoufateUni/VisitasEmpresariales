@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -23,20 +23,12 @@ public class Empresa implements Serializable {
 
 	//bi-directional many-to-one association to Persona
 	@ManyToOne
-	@JoinColumn(name="representante_legal", referencedColumnName="id_persona")
-	private Persona persona1;
+	@JoinColumn(name="representante_legal")
+	private Persona persona;
 
 	//bi-directional many-to-one association to Visita
 	@OneToMany(mappedBy="empresa")
 	private List<Visita> visitas;
-
-	//bi-directional many-to-one association to Persona
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="id_tipo", referencedColumnName="tipo_id"),
-		@JoinColumn(name="representante_legal", referencedColumnName="id_persona")
-		})
-	private Persona persona2;
 
 	public Empresa() {
 	}
@@ -57,12 +49,12 @@ public class Empresa implements Serializable {
 		this.nombreRazonSocial = nombreRazonSocial;
 	}
 
-	public Persona getPersona1() {
-		return this.persona1;
+	public Persona getPersona() {
+		return this.persona;
 	}
 
-	public void setPersona1(Persona persona1) {
-		this.persona1 = persona1;
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 
 	public List<Visita> getVisitas() {
@@ -85,14 +77,6 @@ public class Empresa implements Serializable {
 		visita.setEmpresa(null);
 
 		return visita;
-	}
-
-	public Persona getPersona2() {
-		return this.persona2;
-	}
-
-	public void setPersona2(Persona persona2) {
-		this.persona2 = persona2;
 	}
 
 }

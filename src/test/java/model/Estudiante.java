@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -15,8 +15,9 @@ import java.util.List;
 public class Estudiante implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private EstudiantePK id;
+	@Id
+	@Column(name="persona_id")
+	private int personaId;
 
 	private String codigo;
 
@@ -26,26 +27,23 @@ public class Estudiante implements Serializable {
 
 	//bi-directional one-to-one association to Persona
 	@OneToOne
-	@JoinColumn(name="persona_id", referencedColumnName="id_persona")
-	private Persona persona1;
+	@JoinColumn(name="persona_id")
+	private Persona persona;
 
-	//bi-directional many-to-one association to Persona
+	//bi-directional many-to-one association to Usuario
 	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="id_tipo_doc", referencedColumnName="tipo_id"),
-		@JoinColumn(name="persona_id", referencedColumnName="id_persona")
-		})
-	private Persona persona2;
+	@JoinColumn(name="user_id")
+	private Usuario usuario;
 
 	public Estudiante() {
 	}
 
-	public EstudiantePK getId() {
-		return this.id;
+	public int getPersonaId() {
+		return this.personaId;
 	}
 
-	public void setId(EstudiantePK id) {
-		this.id = id;
+	public void setPersonaId(int personaId) {
+		this.personaId = personaId;
 	}
 
 	public String getCodigo() {
@@ -78,20 +76,20 @@ public class Estudiante implements Serializable {
 		return asistencia;
 	}
 
-	public Persona getPersona1() {
-		return this.persona1;
+	public Persona getPersona() {
+		return this.persona;
 	}
 
-	public void setPersona1(Persona persona1) {
-		this.persona1 = persona1;
+	public void setPersona(Persona persona) {
+		this.persona = persona;
 	}
 
-	public Persona getPersona2() {
-		return this.persona2;
+	public Usuario getUsuario() {
+		return this.usuario;
 	}
 
-	public void setPersona2(Persona persona2) {
-		this.persona2 = persona2;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

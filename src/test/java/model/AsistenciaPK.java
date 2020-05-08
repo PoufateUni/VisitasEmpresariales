@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -12,7 +12,7 @@ public class AsistenciaPK implements Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="estudiante_id")
+	@Column(name="estudiante_id", insertable=false, updatable=false)
 	private int estudianteId;
 
 	@Column(name="visita_id", insertable=false, updatable=false)

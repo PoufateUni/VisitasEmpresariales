@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -18,7 +18,7 @@ public class Asistencia implements Serializable {
 	@EmbeddedId
 	private AsistenciaPK id;
 
-	private byte aprobado;
+	private boolean aprobado;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_registro")
@@ -26,12 +26,12 @@ public class Asistencia implements Serializable {
 
 	//bi-directional many-to-one association to Estudiante
 	@ManyToOne
-	@JoinColumn(name="estudiante_id", referencedColumnName="persona_id")
+	@JoinColumn(name="estudiante_id", insertable=false, updatable=false)
 	private Estudiante estudiante;
 
 	//bi-directional many-to-one association to Visita
 	@ManyToOne
-	@JoinColumn(name="visita_id")
+	@JoinColumn(name="visita_id", insertable=false, updatable=false)
 	private Visita visita;
 
 	public Asistencia() {
@@ -45,11 +45,11 @@ public class Asistencia implements Serializable {
 		this.id = id;
 	}
 
-	public byte getAprobado() {
+	public boolean getAprobado() {
 		return this.aprobado;
 	}
 
-	public void setAprobado(byte aprobado) {
+	public void setAprobado(boolean aprobado) {
 		this.aprobado = aprobado;
 	}
 

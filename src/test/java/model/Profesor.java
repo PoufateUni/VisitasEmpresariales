@@ -1,4 +1,4 @@
-package entities;
+package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -31,12 +31,12 @@ public class Profesor implements Serializable {
 
 	//bi-directional one-to-one association to Persona
 	@OneToOne
-	@JoinColumn(name="id_persona", referencedColumnName="id_persona")
+	@JoinColumn(name="id_persona")
 	private Persona persona;
 
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
-	@JoinColumn(name="user", referencedColumnName="id")
+	@JoinColumn(name="user")
 	private Usuario usuario;
 
 	public Profesor() {
