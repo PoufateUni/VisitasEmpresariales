@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-05-2020 a las 00:34:11
+-- Tiempo de generación: 08-05-2020 a las 19:37:08
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.5
 
@@ -26,8 +26,6 @@ SET time_zone = "+00:00";
 --
 -- Estructura de tabla para la tabla `asistencia`
 --
-CREATE database avecs_bd_iteración1;
-use avecs_bd_iteración1;
 
 CREATE TABLE `asistencia` (
   `estudiante_id` int(11) NOT NULL,
@@ -43,9 +41,8 @@ CREATE TABLE `asistencia` (
 --
 
 CREATE TABLE `director_administrador` (
-  `id_persona` int(11) NOT NULL,
+  `id_director` varchar(8) COLLATE utf8_spanish_ci NOT NULL,
   `fecha_entrada` date NOT NULL,
-  `user_id` int(11) NOT NULL,
   `fecha_salida` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -73,7 +70,8 @@ CREATE TABLE `documento_apoyo` (
 CREATE TABLE `empresa` (
   `nit` int(11) NOT NULL,
   `representante_legal` int(11) NOT NULL,
-  `nombre_razon_social` varchar(200) COLLATE utf8_spanish_ci NOT NULL
+  `nombre_razon_social` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `representante_id_tipo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -84,8 +82,8 @@ CREATE TABLE `empresa` (
 
 CREATE TABLE `estudiante` (
   `persona_id` int(11) NOT NULL,
-  `codigo` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
-  `user_id` int(11) NOT NULL
+  `id_tipo_personal` int(11) NOT NULL,
+  `codigo` varchar(45) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -98,6 +96,14 @@ CREATE TABLE `genero` (
   `id_genero` int(11) NOT NULL,
   `nombre` varchar(45) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `genero`
+--
+
+INSERT INTO `genero` (`id_genero`, `nombre`) VALUES
+(1, 'masculino'),
+(2, 'femenino');
 
 -- --------------------------------------------------------
 
@@ -148,8 +154,8 @@ CREATE TABLE `persona` (
 
 CREATE TABLE `profesor` (
   `id_persona` int(11) NOT NULL,
-  `codigo` varchar(8) COLLATE utf8_spanish_ci NOT NULL,
-  `user` int(11) NOT NULL
+  `id_tipo` int(11) NOT NULL,
+  `codigo` varchar(8) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -190,14 +196,15 @@ CREATE TABLE `tipo_identificacion` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user`
+-- Estructura de tabla para la tabla `usuario`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
   `email` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
   `contrasena` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
-  `fecha_creacion` datetime DEFAULT current_timestamp()
+  `fecha_creacion` datetime DEFAULT current_timestamp(),
+  `id_usuario_tipo` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -211,7 +218,7 @@ CREATE TABLE `visita` (
   `fecha` date NOT NULL,
   `grupo_id` int(11) NOT NULL,
   `empresa_nit` int(11) NOT NULL,
-  `director_realizado` int(11) NOT NULL,
+  `director_realizado` varchar(8) COLLATE utf8_spanish_ci NOT NULL,
   `fecha_creada` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -231,10 +238,7 @@ ALTER TABLE `asistencia`
 -- Indices de la tabla `director_administrador`
 --
 ALTER TABLE `director_administrador`
-  ADD PRIMARY KEY (`id_persona`),
-  ADD UNIQUE KEY `user_id_2` (`user_id`),
-  ADD KEY `user_id` (`user_id`),
-  ADD KEY `id_persona` (`id_persona`);
+  ADD PRIMARY KEY (`id_director`);
 
 --
 -- Indices de la tabla `documento_apoyo`
@@ -249,16 +253,16 @@ ALTER TABLE `documento_apoyo`
 --
 ALTER TABLE `empresa`
   ADD PRIMARY KEY (`nit`),
-  ADD KEY `representante_legal` (`representante_legal`);
+  ADD KEY `representante_legal` (`representante_legal`),
+  ADD KEY `representante_id_tipo` (`representante_id_tipo`),
+  ADD KEY `persona_repres_fk` (`representante_legal`,`representante_id_tipo`);
 
 --
 -- Indices de la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  ADD PRIMARY KEY (`persona_id`),
-  ADD UNIQUE KEY `user_id` (`user_id`),
-  ADD UNIQUE KEY `user_id_2` (`user_id`),
-  ADD KEY `estudiante_user_fk` (`user_id`);
+  ADD PRIMARY KEY (`persona_id`,`id_tipo_personal`),
+  ADD KEY `codigo` (`codigo`);
 
 --
 -- Indices de la tabla `genero`
@@ -285,7 +289,7 @@ ALTER TABLE `materia`
 -- Indices de la tabla `persona`
 --
 ALTER TABLE `persona`
-  ADD PRIMARY KEY (`id_persona`),
+  ADD PRIMARY KEY (`id_persona`,`tipo_id`),
   ADD KEY `tipo_id_persona` (`tipo_id`),
   ADD KEY `genero_fk` (`genero`);
 
@@ -293,11 +297,8 @@ ALTER TABLE `persona`
 -- Indices de la tabla `profesor`
 --
 ALTER TABLE `profesor`
-  ADD PRIMARY KEY (`id_persona`),
-  ADD UNIQUE KEY `codigo` (`codigo`),
-  ADD UNIQUE KEY `codigo_2` (`codigo`),
-  ADD UNIQUE KEY `user_2` (`user`),
-  ADD KEY `user` (`user`);
+  ADD PRIMARY KEY (`id_persona`,`id_tipo`),
+  ADD UNIQUE KEY `codigo` (`codigo`);
 
 --
 -- Indices de la tabla `semestre`
@@ -318,10 +319,10 @@ ALTER TABLE `tipo_identificacion`
   ADD PRIMARY KEY (`id_tipo_identificacion`);
 
 --
--- Indices de la tabla `user`
+-- Indices de la tabla `usuario`
 --
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`,`id_usuario_tipo`);
 
 --
 -- Indices de la tabla `visita`
@@ -330,7 +331,7 @@ ALTER TABLE `visita`
   ADD PRIMARY KEY (`id_visita`),
   ADD KEY `grupo_id` (`grupo_id`),
   ADD KEY `empresa_nit` (`empresa_nit`),
-  ADD KEY `director_realizado` (`director_realizado`);
+  ADD KEY `visita_director_fk` (`director_realizado`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -346,7 +347,7 @@ ALTER TABLE `documento_apoyo`
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `semestre`
@@ -367,12 +368,6 @@ ALTER TABLE `tipo_identificacion`
   MODIFY `id_tipo_identificacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- Restricciones para tablas volcadas
 --
 
@@ -387,8 +382,7 @@ ALTER TABLE `asistencia`
 -- Filtros para la tabla `director_administrador`
 --
 ALTER TABLE `director_administrador`
-  ADD CONSTRAINT `admin_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `profesor_admin_fk` FOREIGN KEY (`id_persona`) REFERENCES `profesor` (`id_persona`);
+  ADD CONSTRAINT `codigo_profesor` FOREIGN KEY (`id_director`) REFERENCES `profesor` (`codigo`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `documento_apoyo`
@@ -401,14 +395,13 @@ ALTER TABLE `documento_apoyo`
 -- Filtros para la tabla `empresa`
 --
 ALTER TABLE `empresa`
-  ADD CONSTRAINT `representante_fk` FOREIGN KEY (`representante_legal`) REFERENCES `persona` (`id_persona`);
+  ADD CONSTRAINT `persona_repres_fk` FOREIGN KEY (`representante_legal`,`representante_id_tipo`) REFERENCES `persona` (`id_persona`, `tipo_id`);
 
 --
 -- Filtros para la tabla `estudiante`
 --
 ALTER TABLE `estudiante`
-  ADD CONSTRAINT `estudiante_id_persona_fk` FOREIGN KEY (`persona_id`) REFERENCES `persona` (`id_persona`),
-  ADD CONSTRAINT `estudiante_user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `estudiante_persona_fk` FOREIGN KEY (`persona_id`,`id_tipo_personal`) REFERENCES `persona` (`id_persona`, `tipo_id`);
 
 --
 -- Filtros para la tabla `grupo`
@@ -429,15 +422,15 @@ ALTER TABLE `persona`
 -- Filtros para la tabla `profesor`
 --
 ALTER TABLE `profesor`
-  ADD CONSTRAINT `profesor_persona_id` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `profesor_user` FOREIGN KEY (`user`) REFERENCES `user` (`id`);
+  ADD CONSTRAINT `id_personal_fk` FOREIGN KEY (`id_persona`,`id_tipo`) REFERENCES `persona` (`id_persona`, `tipo_id`);
 
 --
 -- Filtros para la tabla `visita`
 --
 ALTER TABLE `visita`
-  ADD CONSTRAINT `director_id_fk` FOREIGN KEY (`director_realizado`) REFERENCES `director_administrador` (`id_persona`),
-  ADD CONSTRAINT `visita_empresa_fk` FOREIGN KEY (`empresa_nit`) REFERENCES `empresa` (`nit`);
+  ADD CONSTRAINT `visita_director_fk` FOREIGN KEY (`director_realizado`) REFERENCES `director_administrador` (`id_director`),
+  ADD CONSTRAINT `visita_empresa_fk` FOREIGN KEY (`empresa_nit`) REFERENCES `empresa` (`nit`),
+  ADD CONSTRAINT `visita_grupo_fk` FOREIGN KEY (`grupo_id`) REFERENCES `grupo` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
