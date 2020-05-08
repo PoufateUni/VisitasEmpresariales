@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="avecs_bd_iteración1" transaction-type="RESOURCE_LOCAL">
+		<class>entities.Asistencia</class>
+		<class>entities.AsistenciaPK</class>
+		<class>entities.DirectorAdministrador</class>
+		<class>entities.DocumentoApoyo</class>
+		<class>entities.DocumentoApoyoPK</class>
+		<class>entities.Empresa</class>
+		<class>entities.Estudiante</class>
+		<class>entities.EstudiantePK</class>
+		<class>entities.Genero</class>
+		<class>entities.Grupo</class>
+		<class>entities.Materia</class>
+		<class>entities.Persona</class>
+		<class>entities.PersonaPK</class>
+		<class>entities.Profesor</class>
+		<class>entities.Semestre</class>
+		<class>entities.TipoDocApoyo</class>
+		<class>entities.TipoIdentificacion</class>
+		<class>entities.Usuario</class>
+		<class>entities.UsuarioPK</class>
+		<class>entities.Visita</class>
+		
+		<properties>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/avecs_bd_iteración1"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.password" value=""/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+		</properties>
+	</persistence-unit>
+</persistence>
