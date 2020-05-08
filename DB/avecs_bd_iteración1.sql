@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 08-05-2020 a las 19:37:08
+-- Tiempo de generación: 08-05-2020 a las 21:03:45
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.5
 
@@ -20,11 +20,15 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `avecs_bd_iteración1`
 --
+CREATE DATABASE IF NOT EXISTS `avecs_bd_iteración1` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `avecs_bd_iteración1`;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `asistencia`
+--
+-- Creación: 08-05-2020 a las 04:21:53
 --
 
 CREATE TABLE `asistencia` (
@@ -39,6 +43,9 @@ CREATE TABLE `asistencia` (
 --
 -- Estructura de tabla para la tabla `director_administrador`
 --
+-- Creación: 08-05-2020 a las 17:16:25
+-- Última actualización: 08-05-2020 a las 18:20:11
+--
 
 CREATE TABLE `director_administrador` (
   `id_director` varchar(8) COLLATE utf8_spanish_ci NOT NULL,
@@ -46,10 +53,19 @@ CREATE TABLE `director_administrador` (
   `fecha_salida` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `director_administrador`
+--
+
+INSERT INTO `director_administrador` (`id_director`, `fecha_entrada`, `fecha_salida`) VALUES
+('002', '2020-05-03', '2020-05-21');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `documento_apoyo`
+--
+-- Creación: 08-05-2020 a las 04:21:56
 --
 
 CREATE TABLE `documento_apoyo` (
@@ -66,6 +82,8 @@ CREATE TABLE `documento_apoyo` (
 --
 -- Estructura de tabla para la tabla `empresa`
 --
+-- Creación: 08-05-2020 a las 17:34:39
+--
 
 CREATE TABLE `empresa` (
   `nit` int(11) NOT NULL,
@@ -79,17 +97,32 @@ CREATE TABLE `empresa` (
 --
 -- Estructura de tabla para la tabla `estudiante`
 --
+-- Creación: 08-05-2020 a las 18:18:05
+-- Última actualización: 08-05-2020 a las 18:18:22
+--
 
 CREATE TABLE `estudiante` (
   `persona_id` int(11) NOT NULL,
   `id_tipo_personal` int(11) NOT NULL,
-  `codigo` varchar(45) COLLATE utf8_spanish_ci NOT NULL
+  `codigo` varchar(8) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `estudiante`
+--
+
+INSERT INTO `estudiante` (`persona_id`, `id_tipo_personal`, `codigo`) VALUES
+(1, 1, '1'),
+(5, 4, '2'),
+(1, 2, '3');
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `genero`
+--
+-- Creación: 08-05-2020 a las 04:21:47
+-- Última actualización: 08-05-2020 a las 18:05:36
 --
 
 CREATE TABLE `genero` (
@@ -103,12 +136,15 @@ CREATE TABLE `genero` (
 
 INSERT INTO `genero` (`id_genero`, `nombre`) VALUES
 (1, 'masculino'),
-(2, 'femenino');
+(2, 'femenino'),
+(3, 'otro');
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `grupo`
+--
+-- Creación: 08-05-2020 a las 04:21:59
 --
 
 CREATE TABLE `grupo` (
@@ -123,6 +159,8 @@ CREATE TABLE `grupo` (
 --
 -- Estructura de tabla para la tabla `materia`
 --
+-- Creación: 08-05-2020 a las 04:21:40
+--
 
 CREATE TABLE `materia` (
   `id_materia` int(11) NOT NULL,
@@ -134,10 +172,13 @@ CREATE TABLE `materia` (
 --
 -- Estructura de tabla para la tabla `persona`
 --
+-- Creación: 08-05-2020 a las 18:08:23
+-- Última actualización: 08-05-2020 a las 18:16:15
+--
 
 CREATE TABLE `persona` (
   `id_persona` int(11) NOT NULL,
-  `nombre_razon_social` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `tipo_id` int(11) NOT NULL,
   `apellido1` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   `apellido2` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -146,10 +187,25 @@ CREATE TABLE `persona` (
   `fecha_nacimiento` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `persona`
+--
+
+INSERT INTO `persona` (`id_persona`, `nombre`, `tipo_id`, `apellido1`, `apellido2`, `genero`, `correo_contacto`, `fecha_nacimiento`) VALUES
+(1, 'Pedro', 1, 'Infante', 'Pabón', 1, 'pedro@gmail.com', '1989-12-10'),
+(1, 'Pedrosca', 2, 'perez', 'sloth', 1, '', '1998-05-27'),
+(2, 'Maria', 1, 'Antoñanzas', 'traiter', 2, '', '1997-05-13'),
+(3, 'Fabian', 4, 'Jurimengoro', 'gosipelo', 1, '', '1993-03-16'),
+(4, 'Jan', 1, 'tempo', 'crono', 1, '', '2000-07-22'),
+(5, 'Arkantos', 4, 'Atlan', 'tuspide', 1, '', '1998-05-12');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `profesor`
+--
+-- Creación: 08-05-2020 a las 18:19:53
+-- Última actualización: 08-05-2020 a las 18:19:42
 --
 
 CREATE TABLE `profesor` (
@@ -158,10 +214,20 @@ CREATE TABLE `profesor` (
   `codigo` varchar(8) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `profesor`
+--
+
+INSERT INTO `profesor` (`id_persona`, `id_tipo`, `codigo`) VALUES
+(3, 4, '002'),
+(4, 1, '01');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `semestre`
+--
+-- Creación: 08-05-2020 a las 04:21:50
 --
 
 CREATE TABLE `semestre` (
@@ -175,6 +241,8 @@ CREATE TABLE `semestre` (
 --
 -- Estructura de tabla para la tabla `tipo_doc_apoyo`
 --
+-- Creación: 08-05-2020 a las 04:21:51
+--
 
 CREATE TABLE `tipo_doc_apoyo` (
   `id_tipo_doc` int(11) NOT NULL,
@@ -187,30 +255,80 @@ CREATE TABLE `tipo_doc_apoyo` (
 --
 -- Estructura de tabla para la tabla `tipo_identificacion`
 --
+-- Creación: 08-05-2020 a las 04:21:51
+-- Última actualización: 08-05-2020 a las 18:06:32
+--
 
 CREATE TABLE `tipo_identificacion` (
   `id_tipo_identificacion` int(11) NOT NULL,
   `nombre` varchar(45) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `tipo_identificacion`
+--
+
+INSERT INTO `tipo_identificacion` (`id_tipo_identificacion`, `nombre`) VALUES
+(1, 'cc'),
+(2, 'ti'),
+(3, 'pasaporte'),
+(4, 'extranjeria');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_usuario`
+--
+-- Creación: 08-05-2020 a las 18:04:11
+-- Última actualización: 08-05-2020 a las 19:00:43
+--
+
+CREATE TABLE `tipo_usuario` (
+  `identificador` varchar(1) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(10) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `tipo_usuario`
+--
+
+INSERT INTO `tipo_usuario` (`identificador`, `nombre`) VALUES
+('A', 'Admin'),
+('D', 'Docente'),
+('E', 'estudiante');
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `usuario`
 --
+-- Creación: 08-05-2020 a las 18:57:41
+-- Última actualización: 08-05-2020 a las 19:00:58
+--
 
 CREATE TABLE `usuario` (
-  `id` int(11) NOT NULL,
+  `id_persona` int(11) NOT NULL,
   `email` varchar(120) COLLATE utf8_spanish_ci NOT NULL,
   `contrasena` varchar(255) COLLATE utf8_spanish_ci NOT NULL,
   `fecha_creacion` datetime DEFAULT current_timestamp(),
-  `id_usuario_tipo` int(11) NOT NULL
+  `id_persona_tipo` int(11) NOT NULL,
+  `codigo` varchar(8) COLLATE utf8_spanish_ci NOT NULL,
+  `tipo_usuario` varchar(1) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_persona`, `email`, `contrasena`, `fecha_creacion`, `id_persona_tipo`, `codigo`, `tipo_usuario`) VALUES
+(1, 'pedro', '123', '2020-05-08 14:00:58', 1, '1', 'E');
 
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `visita`
+--
+-- Creación: 08-05-2020 a las 17:21:54
 --
 
 CREATE TABLE `visita` (
@@ -262,6 +380,7 @@ ALTER TABLE `empresa`
 --
 ALTER TABLE `estudiante`
   ADD PRIMARY KEY (`persona_id`,`id_tipo_personal`),
+  ADD UNIQUE KEY `codigo_2` (`codigo`),
   ADD KEY `codigo` (`codigo`);
 
 --
@@ -298,7 +417,8 @@ ALTER TABLE `persona`
 --
 ALTER TABLE `profesor`
   ADD PRIMARY KEY (`id_persona`,`id_tipo`),
-  ADD UNIQUE KEY `codigo` (`codigo`);
+  ADD UNIQUE KEY `codigo` (`codigo`),
+  ADD UNIQUE KEY `codigo_2` (`codigo`);
 
 --
 -- Indices de la tabla `semestre`
@@ -319,10 +439,18 @@ ALTER TABLE `tipo_identificacion`
   ADD PRIMARY KEY (`id_tipo_identificacion`);
 
 --
+-- Indices de la tabla `tipo_usuario`
+--
+ALTER TABLE `tipo_usuario`
+  ADD PRIMARY KEY (`identificador`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id`,`id_usuario_tipo`);
+  ADD PRIMARY KEY (`id_persona`,`id_persona_tipo`),
+  ADD KEY `tipo_usuario_fk` (`tipo_usuario`),
+  ADD KEY `codigo` (`codigo`,`tipo_usuario`);
 
 --
 -- Indices de la tabla `visita`
@@ -347,7 +475,7 @@ ALTER TABLE `documento_apoyo`
 -- AUTO_INCREMENT de la tabla `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_genero` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `semestre`
@@ -365,7 +493,7 @@ ALTER TABLE `tipo_doc_apoyo`
 -- AUTO_INCREMENT de la tabla `tipo_identificacion`
 --
 ALTER TABLE `tipo_identificacion`
-  MODIFY `id_tipo_identificacion` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tipo_identificacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
@@ -423,6 +551,13 @@ ALTER TABLE `persona`
 --
 ALTER TABLE `profesor`
   ADD CONSTRAINT `id_personal_fk` FOREIGN KEY (`id_persona`,`id_tipo`) REFERENCES `persona` (`id_persona`, `tipo_id`);
+
+--
+-- Filtros para la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `id_persona_fk` FOREIGN KEY (`id_persona`,`id_persona_tipo`) REFERENCES `persona` (`id_persona`, `tipo_id`),
+  ADD CONSTRAINT `tipo_usuario_fk` FOREIGN KEY (`tipo_usuario`) REFERENCES `tipo_usuario` (`identificador`);
 
 --
 -- Filtros para la tabla `visita`
